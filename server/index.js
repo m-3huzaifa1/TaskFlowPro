@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
 
 const io = require('socket.io')(Server, {
     cors: {
-        origin: ['http://localhost:3000', 'https://task-flow-pro-tau.vercel.app/],
+        origin: ['http://localhost:3000', 'https://task-flow-pro-tau.vercel.app/'],
         methods: ["GET", "POST"],
         credentials: true
     },
