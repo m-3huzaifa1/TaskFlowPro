@@ -121,7 +121,7 @@ Content-Type: application/json
 
 ### Deployment
 
-* **Frontend:** Render
+* **Frontend:** Vercel
 * **Backend:** Render
 * **Database:** MongoDB Atlas
 
