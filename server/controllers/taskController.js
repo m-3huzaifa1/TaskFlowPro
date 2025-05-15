@@ -101,6 +101,7 @@ const updateTask = async (req, res) => {
       relatedTask: task?._id,
 
     });
+    
     await notify.save()
     res.json(task);
   } catch (error) {
