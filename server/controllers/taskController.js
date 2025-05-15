@@ -4,13 +4,13 @@ const User = require('../model/user');
 const io = require('../index.js')
 const Server = require('../index.js')
 
-const reqIO = require('socket.io')(Server, {
-  cors: {
-    origin: ['http://localhost:3000'],
-    methods: ["GET", "POST"],
-    credentials: true
-  },
-});
+// const reqIO = require('socket.io')(Server, {
+//   cors: {
+//     origin: ['http://localhost:3000'],
+//     methods: ["GET", "POST"],
+//     credentials: true
+//   },
+// });
 // console.log(reqIO, '---------------', io)
 
 // Create task
@@ -189,27 +189,27 @@ const assignTask = async (req, res) => {
     // console.log('IO Instance:', io); // Should show Socket.io server instance
     // console.log('Room Members:', io.sockets.adapter.rooms);
     // Emit Socket.io event
-    if (reqIO == {} || reqIO === undefined || reqIO == { cleanupEmptyChildNamespaces: false }) {
-       console.log(reqIO, 'REQIO')
-      io.to(assignedTo).emit('taskAssigned', {
-        userId: assignedTo,
-        message: `New task assigned: ${task.title}`,
-        dueDate: task.dueDate,
-        assignedBy: req.user.name
-      });
+    // if (reqIO == {} || reqIO === undefined || reqIO == { cleanupEmptyChildNamespaces: false }) {
+    //    console.log(reqIO, 'REQIO')
+    //   io.to(assignedTo).emit('taskAssigned', {
+    //     userId: assignedTo,
+    //     message: `New task assigned: ${task.title}`,
+    //     dueDate: task.dueDate,
+    //     assignedBy: req.user.name
+    //   });
 
-    }
-    else {
-      console.log(io, 'IO')
+    // }
+    // else {
+    //   console.log(io, 'IO')
 
-      reqIO.to(assignedTo).emit('taskAssigned', {
-        userId: assignedTo,
-        message: `New task assigned: ${task.title}`,
-        dueDate: task.dueDate,
-        assignedBy: req.user.name
-      });
+    //   reqIO.to(assignedTo).emit('taskAssigned', {
+    //     userId: assignedTo,
+    //     message: `New task assigned: ${task.title}`,
+    //     dueDate: task.dueDate,
+    //     assignedBy: req.user.name
+    //   });
 
-    }
+    // }
 
     // Return populated task data
     const populatedTask = await Task.findById(req.params.id)
