@@ -19,7 +19,7 @@ const corsOptions = require('./config/cors')
 const taskRoute = require('./routes/taskRoutes')
 const notificationRoute = require('./routes/Notifications.js');
 const auditRoute = require('./routes/audit.js')
-
+const analyticsRoute = require('./routes/analytics.js')
 const credentials = require('./middleware/credentials')
 
 // Protect this route as needed
@@ -42,6 +42,8 @@ app.use('/api/refresh', refreshRoute)
 app.use('/api/tasks', taskRoute)
 app.use('/api/notifications', notificationRoute);
 app.use('/api/audit-logs', auditRoute);
+app.use('/api/analytics', analyticsRoute)
+
 app.get('/', (req, res) => {
     res.send('Server Running')
 })
