@@ -17,6 +17,7 @@ const userRoute = require('./routes/user')
 const refreshRoute = require('./routes/refresh')
 const corsOptions = require('./config/cors')
 const taskRoute = require('./routes/taskRoutes')
+const notificationRoute = require('./routes/Notifications.js');
 
 const credentials = require('./middleware/credentials')
 
@@ -38,6 +39,7 @@ app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
 app.use('/api/refresh', refreshRoute)
 app.use('/api/tasks', taskRoute)
+app.use('/api/notifications', notificationRoute);
 
 app.get('/', (req, res) => {
     res.send('Server Running')
