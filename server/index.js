@@ -16,6 +16,7 @@ const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
 const refreshRoute = require('./routes/refresh')
 const corsOptions = require('./config/cors')
+const taskRoute = require('./routes/taskRoutes')
 
 const credentials = require('./middleware/credentials')
 
@@ -36,6 +37,7 @@ app.use(bodyParser.json())
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
 app.use('/api/refresh', refreshRoute)
+app.use('/api/tasks', taskRoute)
 
 app.get('/', (req, res) => {
     res.send('Server Running')
