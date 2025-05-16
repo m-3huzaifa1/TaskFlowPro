@@ -126,7 +126,7 @@ const deleteTask = async (req, res) => {
       return res.status(404).json({ error: 'Task not found' });
       }  
     }
-    }
+    
     const notify = new Notification({
       userId: req.userId,
       message: `Task Deleted: ${task?.title}`,
