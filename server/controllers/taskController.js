@@ -115,7 +115,7 @@ const deleteTask = async (req, res) => {
     
     const query = { _id: req.params.id };
     console.log(query)
-    const task = await Task.findOneandDelete(query);
+    const task = await Task.findOneAndDelete(query);
 
     if (!task) {
       await Task.deleteOne(query)
