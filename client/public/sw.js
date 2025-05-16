@@ -6,6 +6,10 @@ const ASSETS = [
   '/logo512.png',
 ];
 
+self.addEventListener('error', event => {
+  console.error('SW Global Error:', event.error);
+});
+
 // Install Event
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -21,13 +25,15 @@ self.addEventListener('install', (event) => {
 // Activate Event
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => 
+    caches.keys().then(cacheNames =>
       Promise.all(
         cacheNames.map(cache => {
           if (cache !== CACHE_NAME) return caches.delete(cache);
         })
       )
-    )
+    ).catch((error) => {
+      console.error('Activation failed:', error);
+    })
   );
 });
 
@@ -36,16 +42,19 @@ self.addEventListener('fetch', (event) => {
   // Network first for API calls
   if (event.request.url.includes('/api/')) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event?.request)
         .then(response => {
-          if (event.request.method === 'GET') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put(event.request, clone));
+          if (response.ok && event.request.method === 'GET') {
+            const clone = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(event.request, clone));
           }
           return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() =>
+          caches.match(event.request).then(cachedResponse => cachedResponse ||
+            new Response('Network error', { status: 503 })
+          ))
     );
   }
   // Cache first for static assets
@@ -53,6 +62,14 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       caches.match(event.request)
         .then(cachedResponse => cachedResponse || fetch(event.request))
+        .catch((error) => {
+          console.error('Error in fetch event handler:', error);
+          // Return an appropriate fallback or error response
+          return new Response('An error occurred.', {
+            status: 500,
+            headers: { 'Content-Type': 'text/plain' }
+          })
+        })
     );
   }
 });
