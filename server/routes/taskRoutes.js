@@ -21,7 +21,7 @@ router.post('/create', auditTaskCreateActions, createTask)
 
 router.put('/:id', auditTaskActions, updateTask)
 
-router.delete('/:id', auditTaskActions, deleteTask);
+router.post('/:id/delete', auditTaskActions, deleteTask);
 
 router.put('/:id/assign', auditAssignment, assignTask);
 
