@@ -131,7 +131,7 @@ const deleteTask = async (req, res) => {
 
     });
     await notify.save()
-    res.status(401).json({ message: 'Task deleted successfully' });
+    res.json({ message: 'Task deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
