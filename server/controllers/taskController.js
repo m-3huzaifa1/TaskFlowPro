@@ -118,13 +118,9 @@ const deleteTask = async (req, res) => {
     const task = await Task.findOneandDelete(query);
 
     if (!task) {
-      try{
       await Task.deleteOne(query)
-      console.log('deleted')
-      }
-      catch(){
-      return res.status(404).json({ error: 'Task not found' });
-      }  
+        .then((res)=>console.log('deleted'))
+        .catch((err)=>res.status(404).json({ error: 'Task not found' }))  
     }
     
     const notify = new Notification({
