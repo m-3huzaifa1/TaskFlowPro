@@ -112,12 +112,20 @@ const updateTask = async (req, res) => {
 // Delete task
 const deleteTask = async (req, res) => {
   try {
+    
     const query = { _id: req.params.id };
-
-    const task = await Task.findOneAndDelete(query);
+    console.log(query)
+    const task = await Task.findOneandDelete(query);
 
     if (!task) {
+      try{
+      await Task.deleteOne(query)
+      console.log('deleted')
+      }
+      catch(
       return res.status(404).json({ error: 'Task not found' });
+    )  
+    }
     }
     const notify = new Notification({
       userId: req.userId,
