@@ -71,7 +71,7 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
 
     try {
-      await api.post(`/api/tasks/${task._id}`,{
+      await api.post(`/api/tasks/${task._id}/del`,{
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${user?.accessToken}`,
