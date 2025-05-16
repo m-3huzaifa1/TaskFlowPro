@@ -82,7 +82,8 @@ const updateTask = async (req, res) => {
   try {
     console.log(req.userId)
     const task = await Task.findOneAndUpdate(
-      { _id: req.params.id, createdBy: req.userId },
+      { _id: req.params.id //createdBy: req.userId
+      },
       {
         $set: {
           status: req.body.status
@@ -113,9 +114,9 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const query = { _id: req.params.id };
-    if (req.user.role !== 'Admin') {
-      query.createdBy = req.userId;
-    }
+    // if (req.user.role !== 'Admin') {
+    //   query.createdBy = req.userId;
+    // }
 
     const task = await Task.findOneAndDelete(query);
 
